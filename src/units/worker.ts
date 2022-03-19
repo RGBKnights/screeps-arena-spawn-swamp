@@ -38,6 +38,10 @@ export class Worker implements IUnit {
     this.sm.update()
   }
 
+  public alive(): boolean {
+    return this.creep?.exists ?? false
+  }
+
   public gather(sources: Array<Structure>, destinations: Array<Structure>, resource: ResourceConstant) {
     this.sources = sources
     this.destinations = destinations
@@ -63,6 +67,8 @@ export class Worker implements IUnit {
         break;
       } else if (result == ERR_NOT_ENOUGH_RESOURCES) {
         continue;
+      } else if (result == -4) {
+        console.log("spawning")
       }
     }
   }

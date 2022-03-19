@@ -13,10 +13,16 @@ export class Spawn {
     private ctx: Context
     private sm: StateMachine
     private spawn: StructureSpawn
+    private workers: number
+    private attackers: number
+
+    // 7500 RESOURCE_ENERGY
 
     constructor(ctx: Context, self: StructureSpawn) {
         this.ctx = ctx
         this.spawn = self
+        this.workers = 3
+        this.attackers = 10
 
         this.sm = new StateMachine(this, false)
             .addState('idle', {
@@ -37,20 +43,25 @@ export class Spawn {
     }
 
     private onIdle() {
-        var result = this.ctx.myUnits.some(_ => _ instanceof Worker)
-        if (result == false) {
+        var workers = this.ctx.myUnits.filter(_ => _.alive).filter(_ => _ instanceof Worker).length
+        if (workers < this.workers) {
             this.sm.setState('worker')
-        } else {
+            return
+        }
+
+        var attackers = this.ctx.myUnits.filter(_ => _.alive).filter(_ => _ instanceof Attacker).length
+        if (attackers < this.attackers) {
             this.sm.setState('attacker')
+            return
         }
     }
 
     private onSpawnAttacker() {
-        let result = this.spawn.spawnCreep([MOVE, ATTACK]);
+        let result = this.spawn.spawnCreep([MOVE, MOVE, ATTACK]);
         if (result.object) {
             let unit = new Attacker(this.ctx, result.object)
 
-            var target = this.ctx.theirSpawns.at(0)
+            var target = this.ctx.theirSpawns[0]
             unit.attack(target)
 
             this.ctx.myUnits.push(unit)

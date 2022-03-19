@@ -21,10 +21,17 @@ export class Attacker implements IUnit {
         onUpdate: this.onAttack
       })
     this.sm.setState('idle')
+
+    // new state for:
+    // - Assembly
   }
 
   public update() {
     this.sm.update()
+  }
+
+  public alive(): boolean {
+    return this.creep?.exists ?? false
   }
 
   public attack(target: Creep | Structure | undefined) {
@@ -41,6 +48,10 @@ export class Attacker implements IUnit {
 
     let result = this.creep.attack(this.target)
     if (result == ERR_NOT_IN_RANGE) {
+      let targets = this.creep.findInRange(this.ctx.theirUnits, 1).sort((lhs, rhs) => lhs.hits - rhs.hits)
+      for (const target of targets) {
+        this.creep.attack(target)
+      }
       this.creep.moveTo(this.target)
     }
   }

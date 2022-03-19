@@ -1,6 +1,6 @@
 import { arenaInfo } from 'game';
-import {} from 'game/constants';
-import { StructureSpawn } from 'game/prototypes';
+import { } from 'game/constants';
+import { Creep, StructureSpawn } from 'game/prototypes';
 import { getObjectsByPrototype, getCpuTime, getTicks } from 'game/utils';
 import { Spawn } from 'base/spawn';
 import { IUnit } from 'units/unit';
@@ -10,16 +10,18 @@ export class Context {
 
   myUnits: Array<IUnit> = new Array<IUnit>();
   mySpawns: Array<Spawn> = new Array<Spawn>();
+
+  theirUnits: Array<Creep> = new Array<Creep>();
   theirSpawns: Array<StructureSpawn> = new Array<StructureSpawn>();
 
   constructor() {
     this.ticks = 0
   }
 
-  public update() : void {
+  public update(): void {
     this.ticks = getTicks()
 
-    if(this.ticks == 1) {
+    if (this.ticks == 1) {
       this.setupEntities()
     }
 
@@ -34,11 +36,13 @@ export class Context {
   }
 
   updateEntities() {
+    this.theirUnits = getObjectsByPrototype(Creep).filter(i => !i.my);
+
     for (const base of this.mySpawns) {
-        base.update()
+      base.update()
     }
     for (const unit of this.myUnits) {
-        unit.update()
+      unit.update()
     }
   }
 
