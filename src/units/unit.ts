@@ -1,5 +1,6 @@
+import { Creep, RoomPosition } from 'game/prototypes';
 
 export interface IUnit {
-  alive(): boolean
+  creep: Creep
   update(): void
 }

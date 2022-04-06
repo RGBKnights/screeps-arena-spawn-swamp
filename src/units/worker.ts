@@ -11,14 +11,15 @@ import { Context } from 'serivces/context';
 export class Worker implements IUnit {
   private ctx: Context
   private sm: StateMachine
-  private creep: Creep | undefined
-  sources: Array<Structure>
-  destinations: Array<Structure>
-  resource: ResourceConstant | undefined
+  private sources: Array<Structure>
+  private destinations: Array<Structure>
+  private resource: ResourceConstant | undefined
 
-  constructor(ctx: Context, self: Creep) {
+  public creep: Creep
+
+  constructor(ctx: Context, creep: Creep) {
     this.ctx = ctx
-    this.creep = self
+    this.creep = creep
     this.sources = new Array<Structure>()
     this.destinations = new Array<Structure>()
 
@@ -34,12 +35,9 @@ export class Worker implements IUnit {
     this.sm.setState('idle')
   }
 
+
   public update() {
     this.sm.update()
-  }
-
-  public alive(): boolean {
-    return this.creep?.exists ?? false
   }
 
   public gather(sources: Array<Structure>, destinations: Array<Structure>, resource: ResourceConstant) {

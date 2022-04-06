@@ -21,8 +21,8 @@ export class Spawn {
     constructor(ctx: Context, self: StructureSpawn) {
         this.ctx = ctx
         this.spawn = self
-        this.workers = 3
-        this.attackers = 10
+        this.workers = 1
+        this.attackers = Infinity
 
         this.sm = new StateMachine(this, false)
             .addState('idle', {
@@ -43,13 +43,13 @@ export class Spawn {
     }
 
     private onIdle() {
-        var workers = this.ctx.myUnits.filter(_ => _.alive).filter(_ => _ instanceof Worker).length
+        var workers = this.ctx.myUnits.filter(_ => _.creep.exists).filter(_ => _ instanceof Worker).length
         if (workers < this.workers) {
             this.sm.setState('worker')
             return
         }
 
-        var attackers = this.ctx.myUnits.filter(_ => _.alive).filter(_ => _ instanceof Attacker).length
+        var attackers = this.ctx.myUnits.filter(_ => _.creep.exists).filter(_ => _ instanceof Attacker).length
         if (attackers < this.attackers) {
             this.sm.setState('attacker')
             return
@@ -57,13 +57,11 @@ export class Spawn {
     }
 
     private onSpawnAttacker() {
-        let result = this.spawn.spawnCreep([MOVE, MOVE, ATTACK]);
+        let result = this.spawn.spawnCreep([MOVE, ATTACK]);
         if (result.object) {
             let unit = new Attacker(this.ctx, result.object)
-
             var target = this.ctx.theirSpawns[0]
             unit.attack(target)
-
             this.ctx.myUnits.push(unit)
         }
 
@@ -71,7 +69,7 @@ export class Spawn {
     }
 
     private onSpawnWorker() {
-        let result = this.spawn.spawnCreep([MOVE, CARRY, WORK]);
+        let result = this.spawn.spawnCreep([MOVE, MOVE, CARRY, WORK]);
         if (result.object) {
             let unit = new Worker(this.ctx, result.object)
 

@@ -8,12 +8,13 @@ import { Context } from 'serivces/context';
 export class Attacker implements IUnit {
   private ctx: Context
   private sm: StateMachine
-  private creep: Creep | undefined
   private target: Creep | Structure | undefined
 
-  constructor(ctx: Context, self: Creep) {
+  public creep: Creep
+
+  constructor(ctx: Context, creep: Creep) {
     this.ctx = ctx
-    this.creep = self
+    this.creep = creep
     this.sm = new StateMachine(this)
     this.sm
       .addState('idle')
@@ -28,10 +29,6 @@ export class Attacker implements IUnit {
 
   public update() {
     this.sm.update()
-  }
-
-  public alive(): boolean {
-    return this.creep?.exists ?? false
   }
 
   public attack(target: Creep | Structure | undefined) {
