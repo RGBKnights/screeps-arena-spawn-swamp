@@ -4,7 +4,7 @@
     "description": "Screeps Arena Spawn & Swamp",
     "main": "main.mjs",
     "scripts": {
-        "lint": "eslint \"src/**/*.ts\"",
+        "lint": "eslint \"src/**/*.ts\" --fix",
         "build": "rollup -c --config-"
     },
     "repository": {
