@@ -1,46 +1,55 @@
-// => Engery
-// Spawn => stored: 500e
-// Tower? => build: 1250e
-// Container => stored: 2500e
-// => Paths
-// primary
-// secondary
+// import {
+//   getCpuTime,
+//   getHeapStatistics,
+//   getObjectsByPrototype,
+//   getTicks,
+// } from "game/utils";
+// import { StructureSpawn } from "game/prototypes";
+// import { arenaInfo } from "game";
 
-/*
-import { engine } from "game/engine";
-export function loop() {
-  engine.step();
-}
-*/
+interface IHive {}
 
-import {
-  getCpuTime,
-  getHeapStatistics,
-  getObjectsByPrototype,
-  getTerrainAt,
-  getTicks,
-} from "game/utils";
-import { CostMatrix } from "game/path-finder";
-import { StructureSpawn } from "game/prototypes";
-import { arenaInfo } from "game";
+interface IManager {}
 
-let t = getTicks();
-let spawns = getObjectsByPrototype(StructureSpawn);
-let martix: number[] = [];
+interface ISuperviser {}
 
-let i = 0;
-let p = 0;
-for (; p < 0.98; i++) {
-  martix.push(1);
-  p = getCpuTime() / arenaInfo.cpuTimeLimitFirstTick;
+interface IUnit {}
+
+class ActionResult {}
+
+class ActionStep {}
+
+class ActionContext {
+  public break: boolean = false;
 }
 
-let heap = getHeapStatistics();
-let used = (heap.total_heap_size / heap.heap_size_limit) * 100;
+class ActionRequest {}
+
+interface IAction {
+  act(request: ActionRequest): Generator<unknown, ActionResult, ActionStep>;
+}
+
+class Action implements IAction {
+  public *act(
+    request: ActionRequest
+  ): Generator<ActionStep, ActionResult, ActionContext> {
+    let ctx: ActionContext = yield new ActionStep();
+    while (ctx.break === false) {
+      ctx = yield new ActionStep();
+    }
+    return new ActionResult();
+  }
+}
+
+let action = new Action();
+let generator = action.act(new ActionRequest());
 
 export function loop() {
-  console.log(`index: ${i}`);
-  console.log(`used: ${used}%`);
-  console.log(`tick? ${t}`);
-  console.log(`spawns ${spawns.length}`);
+  let ctx = new ActionContext();
+  let next = generator.next(ctx);
+  if (next.done) {
+    let result = next.value as ActionResult;
+  } else {
+    let step = next.value as ActionResult;
+  }
 }
