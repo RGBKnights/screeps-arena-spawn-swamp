@@ -1,22 +1,14 @@
 {
   "name": "screeps-arena-spawn-swamp",
   "version": "1.0.0",
-  "description": "Testing",
-  "main": "index.mjs",
-  "sideEffects": false,
+  "description": "Screeps spawn & swamp.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RGBKnights/screeps-arena-spawn-swamp.git"
   },
-  "keywords": [
-    "screeps"
-  ],
+  "keywords": ["screeps", "arena", "typescript", "jest", "rollup", "eslint", "prettier"],
   "author": "RGBKnights",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/RGBKnights/screeps-arena-spawn-swamp/issues"
-  },
-  "homepage": "https://github.com/RGBKnights/screeps-arena-spawn-swamp#readme",
   "scripts": {
     "check": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\" --fix",
