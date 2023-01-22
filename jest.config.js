@@ -1,6 +1,9 @@
+const modules = ['lodash-es'].join('|');
+
 module.exports = {
-  transform: {'^.+\\.ts?$': 'ts-jest'},
-  testEnvironment: 'node',
-  testRegex: '/tests/.*\\.(test|spec)?\\.(ts|tsx)$',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
-}
+  preset: 'ts-jest',
+  transform: {
+    [`(${modules}).+\\.js$`]: 'babel-jest',
+  },
+  transformIgnorePatterns: [`/node_modules/(?!${modules})`],
+};

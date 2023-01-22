@@ -5,8 +5,8 @@ const results = groupBy([1.3, 2.1, 2.4], Math.floor);
 
 export function loop() {
   if (isFirstTick()) {
-    // Do somthing
+    console.log("first tick");
   } else {
-    console.log(results);
+    console.log("groups", Object.keys(results).length);
   }
 }
