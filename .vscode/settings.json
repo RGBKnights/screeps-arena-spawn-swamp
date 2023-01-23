@@ -1,17 +1,17 @@
 {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    "editor.tabSize": 2,
-    "editor.formatOnSave": true,
-    "editor.renderWhitespace": "boundary",
-    "files.insertFinalNewline": true,
-    "files.trimTrailingWhitespace": true,
-    "search.exclude": {
-      ".rpt2_cache/**": true,
-      "dist/**": true,
-      "node_modules/**": true,
-      "typings/**": true
-    },
-    "typescript.tsdk": "./node_modules/typescript/lib"
-  }
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "boundary",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "search.exclude": {
+    ".rpt2_cache/**": true,
+    "dist/**": true,
+    "node_modules/**": true,
+    "typings/**": true
+  },
+  "typescript.tsdk": "./node_modules/typescript/lib"
+}

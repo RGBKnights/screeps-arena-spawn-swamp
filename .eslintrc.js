@@ -13,7 +13,14 @@ module.exports = {
       "plugin:import/warnings",
       "plugin:import/typescript"
     ],
-    ignorePatterns: ["exported-game-constants.js"],
+    ignorePatterns: [
+      ".eslintrc.js",
+      "babel.config.js",
+      "jest.config.js",
+      "rollup.config.js",
+      "constants.js",
+      "tests/**/*",
+    ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
       project: "tsconfig.json",
@@ -81,4 +88,3 @@ module.exports = {
       "spaced-comment": "error"
     }
   };
-  
