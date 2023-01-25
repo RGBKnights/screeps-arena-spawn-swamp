@@ -6,4 +6,7 @@ module.exports = {
     [`(${modules}).+\\.js$`]: 'babel-jest',
   },
   transformIgnorePatterns: [`/node_modules/(?!${modules})`],
+  moduleNameMapper: {
+    '^@App/(.*)$': '<rootDir>/src/$1',
+  },
 };

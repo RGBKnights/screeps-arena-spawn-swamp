@@ -17,9 +17,9 @@ module.exports = {
       ".eslintrc.js",
       "babel.config.js",
       "jest.config.js",
-      "rollup.config.js",
-      "constants.js",
+      "rollup.config.mjs",
       "tests/**/*",
+      "dist/**/*",
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {

@@ -19,7 +19,7 @@
   "license": "MIT",
   "scripts": {
     "check": "tsc --noEmit",
-    "lint": "eslint \"src/**/*.ts\" --fix",
+    "lint": "eslint --fix \"src/**/*.ts\"",
     "format": "prettier --write --ignore-unknown \"src/**/*.ts\"",
     "test": "jest",
     "bundle": "rollup -c",
