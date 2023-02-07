@@ -1,24 +1,55 @@
-import { Creep, StructureContainer, StructureExtension, StructureSpawn } from "game/prototypes";
-import { getObjectsByPrototype, getTicks } from "game/utils";
-import { BODYPART_COST } from "game/constants";
+import { ATTACK, ATTACK_POWER, BODYPART_COST, BodyPartConstant, RANGED_ATTACK, RANGED_ATTACK_POWER, ResourceConstant } from "game/constants";
+import { Creep, Store } from "game/prototypes";
+import { cluster } from "@App/dbscan";
+import { getTicks } from "game/utils";
+
+export function groupBy<T, K extends string | number | boolean>(arr: T[], key: (i: T) => K) {
+  return arr.reduce((groups, item) => {
+    const value = key(item);
+    const collection = groups.get(value);
+    if (collection) {
+      collection.push(item);
+    } else {
+      groups.set(value, [item]);
+    }
+    return groups;
+  }, new Map<K, T[]>());
+}
 
 export function isFirstTick(): boolean {
   return getTicks() === 1;
 }
 
-export function getAvaiableEnergy(): number {
-  const containers = getObjectsByPrototype(StructureContainer);
-  return containers.reduce((sum, _) => sum + _.store.energy, 0);
+export interface IHasStore {
+  store: Store<ResourceConstant>;
 }
 
-export function getClaimedEnergy(mine: boolean): number {
-  const spawns = getObjectsByPrototype(StructureSpawn).filter(_ => _.my === mine);
-  const extensions = getObjectsByPrototype(StructureExtension).filter(_ => _.my === mine);
-  const total = spawns.reduce((sum, _) => sum + _.store.energy, 0) + extensions.reduce((sum, _) => sum + _.store.energy, 0);
-  return total;
+export function getEnergy(sources: IHasStore[]): number {
+  return sources.reduce((sum, _) => sum + _.store.energy, 0);
 }
 
-export function getSupply(mine: boolean): number {
-  const creeps = getObjectsByPrototype(Creep).filter(_ => _.my === mine);
-  return creeps.reduce((sum, _) => sum + _.body.filter(s => s.hits > 0).reduce((s, b) => s + BODYPART_COST[b.type], 0), 0);
+export function getSupply(creeps: Creep[]): number {
+  return creeps.flatMap(c => c.body).reduce((sum, body) => sum + BODYPART_COST[body.type], 0);
+}
+
+export function getDurability(creeps: Creep[]): number {
+  return creeps.flatMap(c => c.body).reduce((sum, body) => sum + body.hits, 0);
+}
+
+export function getDamage(creeps: Creep[]): number {
+  return creeps.flatMap(c => c.body).reduce((sum, body) => sum + (body.type === ATTACK ? ATTACK_POWER : body.type === RANGED_ATTACK ? RANGED_ATTACK_POWER : 0), 0);
+}
+
+export function getParts(creeps: Creep[]): Record<BodyPartConstant, number> {
+  return creeps
+    .flatMap(c => c.body)
+    .reduce((parts, b) => {
+      parts[b.type] = parts[b.type] || 0;
+      parts[b.type]++;
+      return parts;
+    }, {} as Record<BodyPartConstant, number>);
+}
+
+export function getClusters(creeps: Creep[]) {
+  return cluster(creeps);
 }

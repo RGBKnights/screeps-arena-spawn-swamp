@@ -23,6 +23,8 @@ const config = [
   output: {
     // Output Directory
     dir: "dist/",
+    // getting the file name right.
+    entryFileNames: "[name].mjs",
     // Output format: ES6 Modules
     format: 'esm',
     // Preserve the folder structure of the source code.
@@ -36,7 +38,7 @@ const config = [
     // Lint the source code.
     eslint(),
     // Clear the dist folder by deleting the directory and creating it again.
-    clear({ targets: ['dist/*'] }),
+    clear({ targets: ['dist/'] }),
     // Locate modules using the Node resolution algorithm, for using third party modules in node_modules
     resolve({ extensions: ['.js', '.jsx', '.ts', '.tsx'] }),
     // Convert CommonJS modules to ES6, so they can be included in a Rollup bundle
