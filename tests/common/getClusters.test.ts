@@ -24,6 +24,6 @@ describe("testing getClusters function", () => {
       { x: 57, y: 55, my: true }
     ] as Creep[];
     let groups = getClusters(creeps);
-    expect(Object.keys(groups).length).toBe(3);
+    expect(Object.keys(groups).length).toBe(4);
   });
 });

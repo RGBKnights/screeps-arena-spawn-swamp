@@ -4,6 +4,17 @@
 
 A Screeps Arena setup with Typescript, Jest for testing, Rollup for bundling, ESLint for static code analysis, and Prettier for an opinionated code formatter.
 
+// Strategies:
+// MARCO
+// 1. Produce Units
+// Plan Construction: Extsions | Spawns | Towers | Ramprats
+// MICRO
+// 1. Control Sqauds
+// Postion Planing: Advament / Iterception / Retreat
+// 2. Control Units
+// Targeting
+// Postion Planing: Formations
+
 ## Script Usage
 
 ```powershell

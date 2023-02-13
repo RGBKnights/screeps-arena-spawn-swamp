@@ -88,7 +88,7 @@ export class DBSCAN {
 }
 
 export function cluster(dataset: Creep[]): Creep[][] {
-  const scaner = new DBSCAN(dataset, 7, 2);
+  const scaner = new DBSCAN(dataset, 7, 1);
   const clusters = scaner.run();
   return clusters.map(x => x.map(i => dataset[i]));
 }

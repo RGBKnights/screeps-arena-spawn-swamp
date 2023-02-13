@@ -1,5 +1,6 @@
 export const ATTACK = "attack";
 export const ATTACK_POWER = 30;
+
 export const BODYPART_COST = {
   move: 50,
   work: 100,
@@ -7,7 +8,8 @@ export const BODYPART_COST = {
   carry: 50,
   heal: 250,
   ranged_attack: 150,
-  tough: 10
+  tough: 10,
+  claim: 0
 };
 export const BODYPART_HITS = 100;
 export const BOTTOM = 5;
@@ -74,6 +76,7 @@ export const ROAD_WEAROUT = 1;
 export const SOURCE_ENERGY_REGEN = 10;
 export const SPAWN_ENERGY_CAPACITY = 1000;
 export const SPAWN_HITS = 3000;
+export const SPAWN_TIME = 3;
 export const STRUCTURE_PROTOTYPES = {
   StructureTower: "tower",
   StructureSpawn: "spawn",

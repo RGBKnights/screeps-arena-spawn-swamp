@@ -1,5 +1,5 @@
-import { ATTACK, ATTACK_POWER, BODYPART_COST, BodyPartConstant, RANGED_ATTACK, RANGED_ATTACK_POWER, ResourceConstant } from "game/constants";
-import { Creep, Store } from "game/prototypes";
+import { ATTACK, ATTACK_POWER, BODYPART_COST, BodyPartConstant, BuildableStructure, OK, RANGED_ATTACK, RANGED_ATTACK_POWER, ResourceConstant } from "game/constants";
+import { ConstructionSite, Creep, Store, StructureSpawn } from "game/prototypes";
 import { cluster } from "@App/dbscan";
 import { getTicks } from "game/utils";
 
@@ -53,3 +53,33 @@ export function getParts(creeps: Creep[]): Record<BodyPartConstant, number> {
 export function getClusters(creeps: Creep[]) {
   return cluster(creeps);
 }
+
+export function queueProduction(spawn: StructureSpawn, body: BodyPartConstant[]): number {
+  const result = spawn.spawnCreep(body);
+  if (result.error) return result.error;
+  else return OK;
+}
+
+export function getTimeToProduce(body: BodyPartConstant[]): number {
+  return body.length * 3;
+}
+
+export function getProduction(spawns: StructureSpawn[]): Creep[] {
+  return spawns.filter(a => a.spawning).map(a => a.spawning.creep);
+}
+
+export function getProductionProgress(spawns: StructureSpawn[]): number[] {
+  return spawns.filter(a => a.spawning).map(a => a.spawning.remainingTime / a.spawning.needTime);
+}
+
+export function getConstruction(spawns: ConstructionSite[]): BuildableStructure[] {
+  return spawns.map(a => a.structure);
+}
+
+export function getConstructionProgress(site: ConstructionSite[]): number[] {
+  return site.map(s => s.progress / s.progressTotal);
+}
+
+// export function getBody(): BodyPartConstant[] {
+//   return [];
+// }

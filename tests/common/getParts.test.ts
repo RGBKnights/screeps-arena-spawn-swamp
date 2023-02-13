@@ -1,13 +1,4 @@
-import { BODYPART_COST, BODYPART_HITS, ATTACK, CARRY, HEAL, MOVE, RANGED_ATTACK, TOUGH, WORK } from "../constants";
-
-// let mockGetObjectsByPrototype = jest.fn();
-// jest.mock("game/utils", () => ({
-//   getObjectsByPrototype: mockGetObjectsByPrototype
-// }));
-
-// jest.mock("game/constants", () => ({
-//   BODYPART_COST: BODYPART_COST
-// }));
+import { BODYPART_HITS, ATTACK, CARRY, HEAL, MOVE, RANGED_ATTACK, TOUGH, WORK } from "../constants";
 
 import { getParts } from "@App/common";
 import { Creep } from "game/prototypes";
